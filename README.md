@@ -1,3 +1,5 @@
 # Hydra-TPS-game
 (HYDRA)-- gioco impiccato --(HYDRA)
-continuate a giocare e vincerete
+semplice gioco dell'impiccato con comunicazione tra client e server.
+
+BUON GAME 
