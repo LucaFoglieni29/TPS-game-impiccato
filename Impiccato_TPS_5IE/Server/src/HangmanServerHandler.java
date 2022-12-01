@@ -1,7 +1,3 @@
-/**
- * Created by kal on 3/1/17.
- */
-
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -57,32 +53,32 @@ public class HangmanServerHandler implements Runnable {
 
                     if (newWordWithDashes.equals(currentWord)) {
                         score++;
-                        msg = String.format("big_win;%s;%s;%s", currentWord, remainingAttempts, score);
+                        msg = String.format("GRANDE_VINCITA;%s;%s;%s", currentWord, remainingAttempts, score);
                         pw.println(msg);
                         pw.flush();
                     } else if (oldWordWithDashes.equals(newWordWithDashes)) {
                         if (--remainingAttempts == 0) {
                             score--;
-                            msg = String.format("lose;%s;%s;%s", currentWord, remainingAttempts, score);
+                            msg = String.format("SCONFITTA;%s;%s;%s", currentWord, remainingAttempts, score);
                             pw.println(msg);
                             pw.flush();
                         } else {
-                            msg = String.format("wrong;%s;%s;%s", newWordWithDashes, remainingAttempts, score);
+                            msg = String.format("sbagliato;%s;%s;%s", newWordWithDashes, remainingAttempts, score);
                             pw.println(msg);
                             pw.flush();
                         }
                     } else {
-                        msg = String.format("correct;%s;%s;%s", newWordWithDashes, remainingAttempts, score);
+                        msg = String.format("corretto;%s;%s;%s", newWordWithDashes, remainingAttempts, score);
                         pw.println(msg);
                         pw.flush();
                     }
                 } else if (--remainingAttempts == 0) {
                     score--;
-                    String message = String.format("lose;%s;%s;%s", currentWord, remainingAttempts, score);
+                    String message = String.format("SCONFITTA;%s;%s;%s", currentWord, remainingAttempts, score);
                     pw.println(message);
                     pw.flush();
                 } else {
-                    String message = String.format("wrong;%s;%s;%s", getWordWithDashes(), remainingAttempts, score);
+                    String message = String.format("sbagliato;%s;%s;%s", getWordWithDashes(), remainingAttempts, score);
                     pw.println(message);
                     pw.flush();
                 }
