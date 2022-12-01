@@ -69,14 +69,14 @@ public class HangmanServer {
     }
 
     private void stopServer() {
-        //Stop the executor service.
+        //finire esecuzione servizio
         listening = false;
         executorService.shutdownNow();
         try {
-            //Stop accepting requests.
+            //finire di accettare richieste
             serverSocket.close();
         } catch (IOException e) {
-            System.out.println("Error in server shutdown");
+            System.out.println("Errore nel server,chiusura in corso");
             e.printStackTrace();
         }
         System.exit(0);
