@@ -33,9 +33,7 @@ import javax.xml.transform.TransformerException;
 
 import org.xml.sax.SAXException;
 
-/**
- * Created by kal on 3/1/17.
- */
+
 public class ServerManagerController implements Initializable, IScreensController {
     ScreensController myController;
 
