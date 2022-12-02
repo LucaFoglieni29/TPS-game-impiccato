@@ -26,7 +26,7 @@ public class HangmanServer {
             while (listening) {
                 Socket clientSocket = serverSocket.accept();
                 executorService.execute(new HangmanServerHandler(words, clientSocket));
-                //(new HangmanServerHandler(words, clientSocket)).start();
+                
                 System.out.printf("Client: %s [%s] is connected%n", clientSocket.getLocalAddress().getHostName(), clientSocket.getLocalAddress().getHostAddress());
             }
         } catch (IOException ex) {
