@@ -39,8 +39,8 @@ public class ScreensController extends StackPane {
         return screens.get(name);
     }
 
-    //load the fxml file, add the screen to the screens collections and
-    //finally inject the screenPane to the controller
+    //caricare il file fxml, aggiungere lo schermo alle raccolte di schermi e
+    //finalmente inietta lo screenPane nel controller
     public boolean loadScreen(String name, String resource) {
         try {
             FXMLLoader myLoader = new FXMLLoader(getClass().getResource(resource));
@@ -133,9 +133,9 @@ public class ScreensController extends StackPane {
             primaryStage.setHeight(h);
             primaryStage.centerOnScreen();
 
-            // (fit the node to the primary stage)
-            // Note: I will change in the next release the Node to Region in the HashMap definision
-            // as Region is a subclass of Node
+            // (adattare il nodo allo stadio primario)
+            // Nota: cambierò nella prossima versione il nodo alla regione nella definizione di HashMap
+            //come Region è una sottoclasse di Node
             Region reg = (Region) screens.get(name);
             reg.prefWidthProperty().bind(primaryStage.widthProperty());
             reg.prefHeightProperty().bind(primaryStage.heightProperty());
