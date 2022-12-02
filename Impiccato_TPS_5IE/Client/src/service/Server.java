@@ -1,8 +1,4 @@
 package service;
-
-/**
- * Created by kal on 3/1/17.
- */
 public class Server {
     private String srvName;
     private String srvIP;
