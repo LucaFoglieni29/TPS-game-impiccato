@@ -28,7 +28,7 @@ public class ScreensFramework extends Application {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.centerOnScreen();
-        //primaryStage.setResizable(false);
+       
         primaryStage.show();
     }
 }
