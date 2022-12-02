@@ -12,10 +12,6 @@ import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-/**
- * Created by kal on 3/1/17.
- */
 public class ServerConnection {
 
     private PrintWriter out = null;
