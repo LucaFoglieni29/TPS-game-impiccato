@@ -34,7 +34,7 @@ public class ScreensController extends StackPane {
         screens.put(name, screen);
     }
 
-    //returns a node with appropriate name
+    //restituisce un nodo con un nome appropriato
     public Node getScreen(String name) {
         return screens.get(name);
     }
@@ -59,7 +59,7 @@ public class ScreensController extends StackPane {
         if (screens.get(name) != null) { //screen loader
             final DoubleProperty opacity = opacityProperty();
 
-            if (!getChildren().isEmpty()) { // if there is more than one screen
+            if (!getChildren().isEmpty()) { // se c'è più di uno schermo
 
                 Timeline fade = new Timeline(
                         new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
