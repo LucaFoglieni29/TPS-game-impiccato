@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 
 
 public class ScreensFramework extends Application {
-    // Note: Many optimizations will be done for the ScreensFramework in future releases.
+    // Nota: nelle versioni future verranno eseguite molte ottimizzazioni per ScreensFramework.
     public static String hangmanClientID = "main;800;650";
     public static String hangmanClientFile = "/client/HangmanClient.fxml";
 
