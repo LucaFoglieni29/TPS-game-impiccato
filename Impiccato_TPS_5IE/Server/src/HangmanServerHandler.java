@@ -14,7 +14,7 @@ public class HangmanServerHandler implements Runnable {
     private short remainingAttempts;
     private short score;
 
-    HangmanServerHandler(ArrayList<String> words, Socket clientSocket) {
+    HangmanServerHandler(ArrayList<String> words, Socket clientSocket) {    //connessione della socket
         this.clientSocket = clientSocket;
         this.words = words;
         this.score = 0;
