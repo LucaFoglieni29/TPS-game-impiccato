@@ -37,33 +37,33 @@ import org.xml.sax.SAXException;
 public class ServerManagerController implements Initializable, IScreensController {
     ScreensController myController;
 
-    @FXML
+     //FXML
     private JFXButton cancel;
 
-    @FXML
+      //FXML
     private JFXTextField srvIP;
 
-    @FXML
+       //FXML
     private JFXTextField port;
 
-    @FXML
+       //FXML
     private JFXButton saveSrv;
 
-    @FXML
+        //FXML
     private JFXTextField srvName;
 
     RequiredFieldValidator required;
     NumberValidator onlyNumber;
 
-    @Override
+
     public void initialize(URL url, ResourceBundle rb) {
         required = new RequiredFieldValidator();
         onlyNumber = new NumberValidator();
 
-        required.setMessage("Input must provided!");
+        required.setMessage("L'input deve essere fornito!");
         required.setIcon(new Icon(AwesomeIcon.WARNING, "1em", ";", "error"));
 
-        onlyNumber.setMessage("Input must be only numbers");
+        onlyNumber.setMessage("L'input deve contenere solo numeri");
         onlyNumber.setIcon(new Icon(AwesomeIcon.WARNING, "1em", ";", "error"));
 
         srvIP.getValidators().add(required);
@@ -83,7 +83,7 @@ public class ServerManagerController implements Initializable, IScreensControlle
 
     }
 
-    @Override
+    
     public void setScreenParent(ScreensController screenParent) {
         this.myController = screenParent;
     }
@@ -92,12 +92,12 @@ public class ServerManagerController implements Initializable, IScreensControlle
     private void saveSrvAction(ActionEvent event) {
         if (srvIP.textProperty().getValue().length() > 0) {
             if (port.textProperty().getValue().length() <= 0 || !port.textProperty().getValue().matches("[0-9]+")) {
-                showAlert(Alert.AlertType.ERROR, "System Alert", "Add Server Error!", "Server port must be provided.\nServer port must be numberic.");
+                showAlert(Alert.AlertType.ERROR, "allerta sistemat", "Aggiungi errore server!", "La porta del server deve essere fornita.\nLa porta del server deve essere numerica.");
                 return;
             }
             String result = addServer(srvName.textProperty().getValue(), srvIP.textProperty().getValue(), port.textProperty().getValue());
             if (result.equals("done")) {
-                showAlert(Alert.AlertType.INFORMATION, "System Alert", "Add Server Information", "Server has been added successfully");
+                showAlert(Alert.AlertType.INFORMATION, "Avviso di sistema", "Aggiungi informazioni sul server", "Il server è stato aggiunto correttamente");
                 srvName.textProperty().setValue("");
                 srvIP.textProperty().setValue("");
                 port.textProperty().setValue("");
@@ -105,10 +105,10 @@ public class ServerManagerController implements Initializable, IScreensControlle
                 this.myController.loadScreen(ScreensFramework.hangmanClientID, ScreensFramework.hangmanClientFile);
                 this.myController.setScreen(ScreensFramework.hangmanClientID);
             } else {
-                showAlert(Alert.AlertType.ERROR, "System Alert", "Add Server Error!", "Error: " + result);
+                showAlert(Alert.AlertType.ERROR, "Avviso di sistema", "Aggiungi errore server!", "Errore: " + result);
             }
         } else {
-            showAlert(Alert.AlertType.ERROR, "System Alert", "Add Server Error!", "Server address must be provided.");
+            showAlert(Alert.AlertType.ERROR, "Avviso di sistema", "Aggiungi errore server!", "È necessario fornire l'indirizzo del server.");
         }
     }
 
@@ -120,14 +120,14 @@ public class ServerManagerController implements Initializable, IScreensControlle
         alert.showAndWait();
     }
 
-    @FXML
+
     private void cancelAction(ActionEvent event) {
         this.myController.setScreen(ScreensFramework.hangmanClientID);
     }
 
     private String addServer(String srvName, String srvIP, String port) {
         try {
-            //Will be changed later to SAX [Simple API XML] because it is light weight !
+            //Sarà cambiato in seguito in SAX [Simple API XML] perché è leggero!
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
@@ -164,7 +164,7 @@ public class ServerManagerController implements Initializable, IScreensControlle
             StreamResult result = new StreamResult(new File("servers.xml"));
 
             transformer.transform(source, result);
-            return "done";
+            return "fine";
 
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
