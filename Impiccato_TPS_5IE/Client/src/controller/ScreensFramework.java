@@ -14,7 +14,7 @@ public class ScreensFramework extends Application {
     public static String insertingServerScreenID = "serverManager;500;410";
     public static String insertingServerScreenFile = "/client/ServerManager.fxml";
 
-    @Override
+
     public void start(Stage primaryStage) throws Exception {
         ScreensController mainContronller = new ScreensController();
         mainContronller.setPrimaryStage(primaryStage);
