@@ -34,48 +34,45 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import service.ServerConnection;
 
-/**
- * Created by kal on 3/1/17.
- */
 public class HangmanClientController implements Initializable, IScreensController {
     ScreensController myController;
     private static Server srv = null;
     private static boolean ongoingGame = false;
     ServerConnection srvConn;
 
-    @FXML
+    //FXML
     private TreeView<String> srvTree;
 
-    @FXML
+    //FXML
     private Label word;
 
-    @FXML
+    //FXML
     private Label selecredSrv;
 
-    @FXML
+     //FXML
     private Label remainingAttempts;
 
-    @FXML
+    //FXML
     private Label score;
 
-    @FXML
+    //FXML
     private Label info;
 
-    @FXML
+    //FXML
     private Label gameStatus;
 
-    @FXML
+    //FXML
     private JFXTextField wholeWord;
 
-    @FXML
+    //FXML
     private ImageView hang;
 
-    @FXML
+    //FXML
     private ImageView hangItems;
 
     private TreeItem<String> root = null;
 
-    @Override
+    
     public void initialize(URL location, ResourceBundle resources) {
 
         this.root = new TreeItem<>("Hangman Servers");
@@ -84,18 +81,18 @@ public class HangmanClientController implements Initializable, IScreensControlle
         this.srvTree.setShowRoot(false);
 
         srvTree.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
-            @Override
+           
             public void handle(javafx.scene.input.MouseEvent event) {
                 if (!ongoingGame) {
-                    if (event.getClickCount() == 2) { //unselect the server with double clicks
+                    if (event.getClickCount() == 2) { //deseleziona il server con doppio clic
                         TreeItem<String> selectedSrv = srvTree.getSelectionModel().getSelectedItem();
                         if (selectedSrv != null) {
-                            if (selectedSrv.isLeaf()) { // get parent name and compare it with server name
+                            if (selectedSrv.isLeaf()) { // ottiene il nome del genitore e lo confronta con il nome del server
                                 if (selectedSrv.getParent().getValue().equals(srv.getSrvName())) {
                                     srv = null;
                                     unselectAllNodes();
                                 }
-                            } else // get item name and compare it with server name
+                            } else // ottiene il nome dell'elemento e lo confronta con il nome del server
                             {
                                 if (selectedSrv.getValue().equals(srv.getSrvName())) {
                                     srv = null;
@@ -108,8 +105,8 @@ public class HangmanClientController implements Initializable, IScreensControlle
                         if (srv == null) {
                             TreeItem<String> selectedSrv = srvTree.getSelectionModel().getSelectedItem();
                             if (selectedSrv != null) {
-                                if (selectedSrv.getParent() != null) { // not root item -> node0
-                                    if (selectedSrv.getChildren() != null && selectedSrv.getChildren().size() > 0) { // server name -> node 1
+                                if (selectedSrv.getParent() != null) { // non elemento radice -> nodo 0
+                                    if (selectedSrv.getChildren() != null && selectedSrv.getChildren().size() > 0) { // nome server -> nodo 1
                                         srv = new Server(selectedSrv.getValue(), selectedSrv.getChildren().get(0).getValue(), selectedSrv.getChildren().get(1).getValue());
                                         selecredSrv.setText(srv.getSrvName() + " Selected");
                                         System.out.printf("%s [%s: %s]%n", srv.getSrvName(), srv.getSrvIP(), srv.getPort());
@@ -134,11 +131,11 @@ public class HangmanClientController implements Initializable, IScreensControlle
         this.myController = screenParent;
     }
 
-    @FXML
+   
     void playGameAction(ActionEvent event) {
-        if (!ongoingGame) { // this is a new game, sever must be selected!
-            if (srv == null) { // server is not selected !
-                showAlert(Alert.AlertType.ERROR, "System Alert", "New Game Error", "Please select a server to play Hangman!");
+        if (!ongoingGame) { // questo è un nuovo gioco, il server deve essere selezionato!
+            if (srv == null) { // il server non è selezionato!
+                showAlert(Alert.AlertType.ERROR, "Allerta sistema", "errore nuovo gioco", "Seleziona un server per giocare a Hangman!");
                 return;
             }
             initializeGameVariables(true);
@@ -148,7 +145,7 @@ public class HangmanClientController implements Initializable, IScreensControlle
         } else {
             try {
                 initializeGameVariables(false);
-                srvConn.writeToServer("new_game");
+                srvConn.writeToServer("nuovo_gioco");
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -161,25 +158,25 @@ public class HangmanClientController implements Initializable, IScreensControlle
     void resetAction(ActionEvent event) throws IOException {
         if (ongoingGame) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirmation");
-            alert.setHeaderText("Add New Server");
-            alert.setContentText("Are you sure want to stop the game?\nNote that the ongoing game will be stopped and canceled!");
+            alert.setTitle("conferma");
+            alert.setHeaderText("aggiungi nuovo server");
+            alert.setContentText("Sei sicuro di voler interrompere il gioco? Tieni presente che il gioco in corso verrà interrotto e annullato!");
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
-                //srvConn.writeToServer("stop_game");
+              
                 srvConn.getClientSocket().close();
                 srvConn = null;
                 srv = null;
                 ongoingGame = false;
                 initializeGameVariables(true);
                 unselectAllNodes();
-                info.setText("The game has been stopped and reseted successfully");
+                info.setText("Il gioco è stato interrotto e ripristinato correttamente");
             }
         }
     }
 
-    @FXML
+  
     void sendLetter(ActionEvent event) {
         if (ongoingGame) {
             try {
@@ -190,7 +187,7 @@ public class HangmanClientController implements Initializable, IScreensControlle
                         System.out.println(msg);
                     }
                 } else {
-                    showAlert(Alert.AlertType.INFORMATION, "System Information", "New Game Required", "Your either do not have remaining attempts or won the game! Please play a new game!\nGood Luck :)");
+                    showAlert(Alert.AlertType.INFORMATION, "Informazioni di sistema", "Nuova partita richiesta", "Non hai ancora tentativi o hai vinto la partita! Gioca a un nuovo gioco! Buona fortuna :)");
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -198,7 +195,7 @@ public class HangmanClientController implements Initializable, IScreensControlle
         }
     }
 
-    @FXML
+   
     void sendWholeWordAction(ActionEvent event) {
         if (ongoingGame) {
             try {
@@ -209,7 +206,7 @@ public class HangmanClientController implements Initializable, IScreensControlle
                         System.out.println(msg);
                     }
                 } else {
-                    showAlert(Alert.AlertType.INFORMATION, "System Information", "New Game Required", "Your either do not have remaining attempts or won the game! Please play a new game!\nGood Luck :)");
+                    showAlert(Alert.AlertType.INFORMATION, "Informazioni di sistema", "Nuova partita richiesta", "Non hai ancora tentativi o hai vinto la partita! Gioca a un nuovo gioco!\nBuona fortuna :)");
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -221,7 +218,7 @@ public class HangmanClientController implements Initializable, IScreensControlle
     @FXML
     void addSrvAction(ActionEvent event) {
         if (ongoingGame) {
-            showAlert(Alert.AlertType.WARNING, "System Warning", "Add New Server", "You cannot add a new server while you play!\nPlease end-up your game first");
+            showAlert(Alert.AlertType.WARNING, "Avviso di sistema", "Aggiungi nuovo server", "Non puoi aggiungere un nuovo server mentre giochi! Prima termina il gioco");
             return;
         }
         System.out.println("client.HangmanClientController.addSrvAction()");
@@ -280,7 +277,7 @@ public class HangmanClientController implements Initializable, IScreensControlle
 
     private void unselectAllNodes() {
         srvTree.getSelectionModel().select(null);
-        selecredSrv.setText("No Server Selected");
+        selecredSrv.setText("nessun server selezionato");
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
@@ -311,39 +308,39 @@ public class HangmanClientController implements Initializable, IScreensControlle
             setOnSucceeded((WorkerStateEvent event) -> {
                 String result = getValue();
                 if (result.equals("done")) {
-                    info.setText("Connection establised with: " + srv.getSrvName() + " [" + srv.getSrvIP() + ":" + srv.getPort() + "]");
-                    showAlert(Alert.AlertType.INFORMATION, "System Information", "Connection Established", "Connection to: " + srv.getSrvName() + " has been established successfully");
+                    info.setText("Connessione stabilita con: " + srv.getSrvName() + " [" + srv.getSrvIP() + ":" + srv.getPort() + "]");
+                    showAlert(Alert.AlertType.INFORMATION, "Informazioni di sistema", "Connessione stabilita", "Connessione a: " + srv.getSrvName() + " è stato stabilito con successo");
                     srvConn.writeToServer("new_game");
                     ReceiveService rs = new ReceiveService();
                     rs.start();
                 } else {
-                    info.setText("Unable to connect to: " + srv.getSrvName());
+                    info.setText("Impossibile connettersi a: " + srv.getSrvName());
                     srvConn = null;
                     srv = null;
                     ongoingGame = false;
                     initializeGameVariables(true);
                     unselectAllNodes();
-                    showAlert(Alert.AlertType.ERROR, "System Alert", "Connection Error", "Unable to connect to server\nError is: " + result);
+                    showAlert(Alert.AlertType.ERROR, "Avviso di sistema", "Errore di connessione", "Impossibile connettersi al server.L'errore è: " + result);
                 }
             });
         }
 
-        @Override
+    
         protected Task<String> createTask() {
             return new Task<String>() {
-                @Override
+             
                 protected String call() {
                     srvConn = new ServerConnection();
-                    if (srvConn.getClientSocket() == null || srvConn.getClientSocket().isClosed()) {  // if socket is not connected to the server
+                    if (srvConn.getClientSocket() == null || srvConn.getClientSocket().isClosed()) {  // se il socket non è connesso al server
                         return srvConn.connect(srv.getSrvIP().substring(4, srv.getSrvIP().length()), srv.getPort().substring(6, srv.getPort().length()));
                     }
-                    return "done"; //means the connection is already established and no need to establish it again
+                    return "done"; //significa che la connessione è già stata stabilita e non è necessario stabilirla di nuovo
                 }
             };
         }
 
         @Override
-        public boolean cancel() { // not used !!!
+        public boolean cancel() { // non usato !!
             try {
                 srvConn.getClientSocket().close();
             } catch (IOException ex) {
@@ -354,22 +351,10 @@ public class HangmanClientController implements Initializable, IScreensControlle
 
     }
 
-    private class ReceiveService extends Service<Void> {
-
-        private ReceiveService() {
-            setOnSucceeded((WorkerStateEvent event) -> {
-                // We can update GUI here as well instead of using Platform.runLater
-            });
-
-            setOnFailed((WorkerStateEvent event) -> {
-                // We can update GUI here as well instead of using Platform.runLater
-            });
-        }
-
-        @Override
+     
         protected Task<Void> createTask() {
             return new Task() {
-                @Override
+                
                 protected Object call() throws IOException {
                     srvConn.readFromServer(word, info, remainingAttempts, score, gameStatus, hang, hangItems);
                     return null;
