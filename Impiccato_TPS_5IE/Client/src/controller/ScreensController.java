@@ -29,7 +29,7 @@ public class ScreensController extends StackPane {
         this.primaryStage = primaryStage;
     }
 
-    //Add screen to the collection
+    //Aggiungi schermo alla raccolta
     public void addScreen(String name, Node screen) {
         screens.put(name, screen);
     }
@@ -56,7 +56,7 @@ public class ScreensController extends StackPane {
     }
 
     public boolean setScreen(final String name) {
-        if (screens.get(name) != null) { //screen loader
+        if (screens.get(name) != null) { // caricatore dello schermo
             final DoubleProperty opacity = opacityProperty();
 
             if (!getChildren().isEmpty()) { // se c'è più di uno schermo
@@ -66,9 +66,8 @@ public class ScreensController extends StackPane {
                         new KeyFrame(new Duration(1000), new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent event) {
-                                getChildren().remove(0); // remove the displayed screen
-                                getChildren().add(0, screens.get(name)); //add the screen
-
+                                getChildren().remove(0); // rimuovere la schermata visualizzata
+                                getChildren().add(0, screens.get(name)); //aggiungi lo schermo
                                 fitNodeInParent(name);
                                 setNodeTitle(name);
 
@@ -81,25 +80,22 @@ public class ScreensController extends StackPane {
                         }, new KeyValue(opacity, 0.0)));
                 fade.play();
             } else {
-                //setOpacity(0.0);
-                getChildren().add(screens.get(name)); //if no one else has been displayed, then just show
+                
+                getChildren().add(screens.get(name)); //se non è stato visualizzato nessun altro, allora mostra
                 fitNodeInParent(name);
                 setNodeTitle(name);
-                /*Timeline fadeIn = new Timeline(
-                        new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
-                        new KeyFrame(new Duration(2500), new KeyValue(opacity, 1.0)));
-                fadeIn.play();*/
+              
             }
             return true;
         } else {
-            System.out.println("Screen has not been loaded!\n");
+            System.out.println("Lo schermo non è stato caricato!");
             return false;
         }
     }
 
     public boolean unloadScreen(String name) {
         if (screens.remove(name) == null) {
-            System.out.println("Screen did not exist");
+            System.out.println("Lo schermo non esisteva");
             return false;
         } else {
             return true;
@@ -109,7 +105,7 @@ public class ScreensController extends StackPane {
     private void setNodeTitle(String name) {
         switch (name.split(";")[0]) {
             case "main":
-                primaryStage.setTitle("Hydra [Hangman Client Application]");
+                primaryStage.setTitle("Hydra [Applicazione client dell'impiccato]");
                 break;
             case "serverManager":
                 primaryStage.setTitle("Hydra ServerManager");
