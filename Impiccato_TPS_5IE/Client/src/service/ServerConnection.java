@@ -31,18 +31,18 @@ public class ServerConnection {
             try {
                 port = Integer.parseInt(portStr);
             } catch (NumberFormatException ex) {
-                return "Unable to connect!\nPort is not numeric value!";
+                return "Impossibile connettersi!\nLa porta non è un valore numerico!";
             }
             clientSocket = new Socket();
             clientSocket.connect(new InetSocketAddress(host, port), 1000);
             out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
-            return "done";
+            return "fine";
         } catch (UnknownHostException e) {
             clientSocket = null;
-            return "Host: " + host + " is unknown or not available in the nework.";
+            return "Host: " + host + " è sconosciuto o non disponibile nella rete.";
         } catch (IOException e) {
             clientSocket = null;
-            return "Couldn't get I/O for the connection to: " + host + ".";
+            return "Impossibile ottenere l'I/O per la connessione a: " + host + ".";
         }
     }
 
@@ -50,7 +50,7 @@ public class ServerConnection {
         String line;
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         while ((line = in.readLine()) != null) {
-            if (line.equals("ok_stopped")) {
+            if (line.equals("ok_fine")) {
                 break;
             }
             String[] msg = line.split(";");
@@ -61,27 +61,27 @@ public class ServerConnection {
                     remainingAttempts.setText(msg[2]);
                     score.setText(msg[3]);
                     switch (msg[0]) {
-                        case "start":
-                            info.setText("The new game has been started successfully :)");
+                        case "INIZIO":
+                            info.setText("Il nuovo gioco è stato avviato con successo :)");
                             break;
-                        case "win":
-                            info.setText("Good job! you won!");
-                            gameStatus.setText("Bravo! You Won!");
+                        case "VINCITA":
+                            info.setText("Buon lavoro! hai vinto!!");
+                            gameStatus.setText("Bravo! HAI VINTO!");
                             break;
-                        case "wrong":
-                            info.setText("Sorry, Your guess was wrong!");
+                        case "SBAGLIATA":
+                            info.setText("Scusa, la tua ipotesi era sbagliata!");
                             setImages(hang, hangItems, Integer.parseInt(msg[2]));
                             break;
-                        case "correct":
-                            info.setText("good guess! Continue moving on!");
+                        case "CORRETTO":
+                            info.setText("ottima ipotesi! Continua ad andare avanti!");
                             break;
-                        case "big_win":
-                            info.setText("Wow! Great guess! You knew the entire word :)");
-                            gameStatus.setText("Bravo! You Won!");
+                        case "GRANDE VINCITA":
+                            info.setText("Oh! Ottima supposizione! Sapevi l'intera parola :)");
+                            gameStatus.setText("Bravo! HAI VINTO");
                             break;
-                        case "lose":
+                        case "PERDITA":
                             setImages(hang, hangItems, Integer.parseInt(msg[2]));
-                            info.setText("Sorry! Game over :( Please try again");
+                            info.setText("Scusa! Gioco finito :( Per favore riprova");
                             gameStatus.setText("Game Over!");
                             break;
                         default:
