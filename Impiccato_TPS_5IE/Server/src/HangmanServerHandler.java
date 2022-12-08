@@ -20,7 +20,7 @@ public class HangmanServerHandler implements Runnable {
         this.score = 0;
     }
 
-    @Override
+  
     public void run() {
         BufferedReader br = null;
         PrintWriter pw = null;
@@ -33,16 +33,16 @@ public class HangmanServerHandler implements Runnable {
             String msg;
 
             while ((line = br.readLine()) != null) {
-                if (line.trim().equals("new_game")) {
+                if (line.trim().equals("nuovo_gioco")) {
                     currentWord = getRandomWord();
                     remainingAttempts = _TatalAttempts;
                     attempedGuess = "";
-                    msg = String.format("start;%s;%s;%s", getWordWithDashes(), remainingAttempts, score);
+                    msg = String.format("inizio;%s;%s;%s", getWordWithDashes(), remainingAttempts, score);
                     pw.println(msg);
                     pw.flush();
                 } else if (line.trim().equals(currentWord)) {
                     score++;
-                    msg = String.format("win;%s;%s;%s", currentWord, remainingAttempts, score);
+                    msg = String.format("vinto;%s;%s;%s", currentWord, remainingAttempts, score);
                     pw.println(msg);
                     pw.flush();
                 } else if (line.trim().length() == 1) {
@@ -99,7 +99,7 @@ public class HangmanServerHandler implements Runnable {
     private String getRandomWord() {
         int randIndex = (int) (Math.random() * words.size());
         String word = words.get(randIndex);
-        System.out.println("=== Word === " + word);
+        System.out.println("=== Parola === " + word);
         return word;
     }
 
