@@ -61,10 +61,10 @@ public class ServerManagerController implements Initializable, IScreensControlle
         onlyNumber = new NumberValidator();
 
         required.setMessage("L'input deve essere fornito!");
-        required.setIcon(new Icon(AwesomeIcon.WARNING, "1em", ";", "error"));
+        required.setIcon(new Icon(AwesomeIcon.WARNING, "1em", ";", "errore"));
 
         onlyNumber.setMessage("L'input deve contenere solo numeri");
-        onlyNumber.setIcon(new Icon(AwesomeIcon.WARNING, "1em", ";", "error"));
+        onlyNumber.setIcon(new Icon(AwesomeIcon.WARNING, "1em", ";", "errore"));
 
         srvIP.getValidators().add(required);
         port.getValidators().add(onlyNumber);
@@ -92,11 +92,11 @@ public class ServerManagerController implements Initializable, IScreensControlle
     private void saveSrvAction(ActionEvent event) {
         if (srvIP.textProperty().getValue().length() > 0) {
             if (port.textProperty().getValue().length() <= 0 || !port.textProperty().getValue().matches("[0-9]+")) {
-                showAlert(Alert.AlertType.ERROR, "allerta sistemat", "Aggiungi errore server!", "La porta del server deve essere fornita.\nLa porta del server deve essere numerica.");
+                showAlert(Alert.AlertType.ERROR, "allerta sistema", "Aggiungi errore server!", "La porta del server deve essere fornita.La porta del server deve essere numerica.");
                 return;
             }
             String result = addServer(srvName.textProperty().getValue(), srvIP.textProperty().getValue(), port.textProperty().getValue());
-            if (result.equals("done")) {
+            if (result.equals("fine")) {
                 showAlert(Alert.AlertType.INFORMATION, "Avviso di sistema", "Aggiungi informazioni sul server", "Il server è stato aggiunto correttamente");
                 srvName.textProperty().setValue("");
                 srvIP.textProperty().setValue("");
