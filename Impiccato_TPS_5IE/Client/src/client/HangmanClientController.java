@@ -108,7 +108,7 @@ public class HangmanClientController implements Initializable, IScreensControlle
                                 if (selectedSrv.getParent() != null) { // non elemento radice -> nodo 0
                                     if (selectedSrv.getChildren() != null && selectedSrv.getChildren().size() > 0) { // nome server -> nodo 1
                                         srv = new Server(selectedSrv.getValue(), selectedSrv.getChildren().get(0).getValue(), selectedSrv.getChildren().get(1).getValue());
-                                        selecredSrv.setText(srv.getSrvName() + " Selected");
+                                        selecredSrv.setText(srv.getSrvName() + " Selezionato");
                                         System.out.printf("%s [%s: %s]%n", srv.getSrvName(), srv.getSrvIP(), srv.getPort());
                                     } else { // one of children is selected
                                         TreeItem<String> parent = selectedSrv.getParent();
@@ -215,7 +215,7 @@ public class HangmanClientController implements Initializable, IScreensControlle
         wholeWord.setText("");
     }
 
-    @FXML
+   //
     void addSrvAction(ActionEvent event) {
         if (ongoingGame) {
             showAlert(Alert.AlertType.WARNING, "Avviso di sistema", "Aggiungi nuovo server", "Non puoi aggiungere un nuovo server mentre giochi! Prima termina il gioco");
