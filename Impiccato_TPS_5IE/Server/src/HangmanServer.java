@@ -21,13 +21,13 @@ public class HangmanServer {
     private static void listen(String[] args) {
         try {
             serverSocket = new ServerSocket(setPort(args));
-            System.out.printf("Available threads: [%s]%n", availableThreads);
-            System.out.printf("Awaiting connections from port [%s]...%n%n", serverSocket.getLocalPort());
+            System.out.printf("Discussioni disponibili: [%s]%n", availableThreads);
+            System.out.printf("In attesa di connessioni dalla porta [%s]...%n%n", serverSocket.getLocalPort());
             while (listening) {
                 Socket clientSocket = serverSocket.accept();
                 executorService.execute(new HangmanServerHandler(words, clientSocket));
                 
-                System.out.printf("Client: %s [%s] is connected%n", clientSocket.getLocalAddress().getHostName(), clientSocket.getLocalAddress().getHostAddress());
+                System.out.printf("Client: %s [%s] è connesso%n", clientSocket.getLocalAddress().getHostName(), clientSocket.getLocalAddress().getHostAddress());
             }
         } catch (IOException ex) {
             ex.printStackTrace();
