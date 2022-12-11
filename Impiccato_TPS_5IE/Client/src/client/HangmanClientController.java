@@ -110,7 +110,7 @@ public class HangmanClientController implements Initializable, IScreensControlle
                                         srv = new Server(selectedSrv.getValue(), selectedSrv.getChildren().get(0).getValue(), selectedSrv.getChildren().get(1).getValue());
                                         selecredSrv.setText(srv.getSrvName() + " Selezionato");
                                         System.out.printf("%s [%s: %s]%n", srv.getSrvName(), srv.getSrvIP(), srv.getPort());
-                                    } else { // one of children is selected
+                                    } else { // uno dei campi non è inserito
                                         TreeItem<String> parent = selectedSrv.getParent();
                                         srv = new Server(parent.getValue(), parent.getChildren().get(0).getValue(), parent.getChildren().get(1).getValue());
                                         selecredSrv.setText(srv.getSrvName() + " Selected");
