@@ -34,37 +34,34 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import service.ServerConnection;
 
-public class HangmanClientController implements Initializable, IScreensController {
+public class HangmanClientController implements Initializable, IScreensController {     //l controller gestisce l'interfaccia utente e la comunicazione con il server attraverso un oggetto di tipo ServerConnection
     ScreensController myController;
     private static Server srv = null;
     private static boolean ongoingGame = false;
-    ServerConnection srvConn;
+    ServerConnection srvConn;                               
 
-    //FXML
     private TreeView<String> srvTree;
 
-    //FXML
+ 
     private Label word;
 
-    //FXML
     private Label selecredSrv;
 
-     //FXML
+
     private Label remainingAttempts;
 
-    //FXML
+ 
     private Label score;
 
-    //FXML
+   
     private Label info;
 
-    //FXML
     private Label gameStatus;
 
-    //FXML
+ 
     private JFXTextField wholeWord;
 
-    //FXML
+   
     private ImageView hang;
 
     //FXML
@@ -73,16 +70,16 @@ public class HangmanClientController implements Initializable, IScreensControlle
     private TreeItem<String> root = null;
 
     
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) {            // viene chiamato quando la scena associata al controller viene caricata. In questo metodo vengono impostate le azioni da eseguire in risposta a eventi dell'interfaccia utente
 
-        this.root = new TreeItem<>("Hangman Servers");
+        this.root = new TreeItem<>("Impiccato Servers");
         this.root.setExpanded(true);
         this.srvTree.setRoot(root);
         this.srvTree.setShowRoot(false);
 
         srvTree.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
            
-            public void handle(javafx.scene.input.MouseEvent event) {
+            public void handle(javafx.scene.input.MouseEvent event) {           //viene chiamato in risposta a eventi specifici, come il doppio clic su un elemento del TreeView. In questo caso, viene verificato se l'elemento selezionato è un nodo foglia (cioè un server) e, in tal caso, viene impostato l'oggetto srv come il server selezionato
                 if (!ongoingGame) {
                     if (event.getClickCount() == 2) { //deseleziona il server con doppio clic
                         TreeItem<String> selectedSrv = srvTree.getSelectionModel().getSelectedItem();
@@ -154,25 +151,8 @@ public class HangmanClientController implements Initializable, IScreensControlle
 
     }
 
-    @FXML
-    void resetAction(ActionEvent event) throws IOException {
-        if (ongoingGame) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("conferma");
-            alert.setHeaderText("aggiungi nuovo server");
-            alert.setContentText("Sei sicuro di voler interrompere il gioco? Tieni presente che il gioco in corso verrà interrotto e annullato!");
-
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
-              
-                srvConn.getClientSocket().close();
-                srvConn = null;
-                srv = null;
-                ongoingGame = false;
-                initializeGameVariables(true);
-                unselectAllNodes();
-                info.setText("Il gioco è stato interrotto e ripristinato correttamente");
-            }
+    
+    
         }
     }
 
@@ -323,31 +303,12 @@ public class HangmanClientController implements Initializable, IScreensControlle
                     showAlert(Alert.AlertType.ERROR, "Avviso di sistema", "Errore di connessione", "Impossibile connettersi al server.L'errore è: " + result);
                 }
             });
-        }
+       
 
     
-        protected Task<String> createTask() {
-            return new Task<String>() {
-             
-                protected String call() {
-                    srvConn = new ServerConnection();
-                    if (srvConn.getClientSocket() == null || srvConn.getClientSocket().isClosed()) {  // se il socket non è connesso al server
-                        return srvConn.connect(srv.getSrvIP().substring(4, srv.getSrvIP().length()), srv.getPort().substring(6, srv.getPort().length()));
-                    }
-                    return "done"; //significa che la connessione è già stata stabilita e non è necessario stabilirla di nuovo
-                }
-            };
+         
         }
 
-        @Override
-        public boolean cancel() { // non usato !!
-            try {
-                srvConn.getClientSocket().close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            return super.cancel();
-        }
 
     }
 
