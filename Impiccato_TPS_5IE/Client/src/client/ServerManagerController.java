@@ -56,9 +56,9 @@ public class ServerManagerController implements Initializable, IScreensControlle
     NumberValidator onlyNumber;
 
 
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) {         // viene chiamato quando la scena associata al url viene caricata. In questo metodo vengono impostate le azioni da eseguire in risposta a eventi dell'interfaccia utente
         required = new RequiredFieldValidator();
-        onlyNumber = new NumberValidator();
+        onlyNumber = new NumberValidator();         //validazione
 
         required.setMessage("L'input deve essere fornito!");
         required.setIcon(new Icon(AwesomeIcon.WARNING, "1em", ";", "errore"));
@@ -75,7 +75,7 @@ public class ServerManagerController implements Initializable, IScreensControlle
             }
         });
 
-        srvIP.focusedProperty().addListener((o, oldVal, newVal) -> {
+        srvIP.focusedProperty().addListener((o, oldVal, newVal) -> {        //validazione
             if (!newVal) {
                 srvIP.validate();
             }
@@ -84,12 +84,10 @@ public class ServerManagerController implements Initializable, IScreensControlle
     }
 
     
-    public void setScreenParent(ScreensController screenParent) {
-        this.myController = screenParent;
-    }
+
 
     @FXML
-    private void saveSrvAction(ActionEvent event) {
+    private void saveSrvAction(ActionEvent event) {     //evento,salvare info del server
         if (srvIP.textProperty().getValue().length() > 0) {
             if (port.textProperty().getValue().length() <= 0 || !port.textProperty().getValue().matches("[0-9]+")) {
                 showAlert(Alert.AlertType.ERROR, "allerta sistema", "Aggiungi errore server!", "La porta del server deve essere fornita.La porta del server deve essere numerica.");
@@ -112,22 +110,10 @@ public class ServerManagerController implements Initializable, IScreensControlle
         }
     }
 
-    private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
 
-
-    private void cancelAction(ActionEvent event) {
-        this.myController.setScreen(ScreensFramework.hangmanClientID);
-    }
-
-    private String addServer(String srvName, String srvIP, String port) {
+    private String addServer(String srvName, String srvIP, String port) {           //aggiunge stringa server in file "server.xml" con gli attributi presi
         try {
-            //Sarà cambiato in seguito in SAX [Simple API XML] perché è leggero!
+         
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
@@ -140,44 +126,31 @@ public class ServerManagerController implements Initializable, IScreensControlle
             } else {
                 doc = docBuilder.newDocument();
                 rootElement = doc.createElement("servers");
-                doc.appendChild(rootElement);
+              
             }
 
-            Element server = doc.createElement("server");
-            rootElement.appendChild(server);
+            Element server = doc.createElement("server");       //aggiunge server
+           
 
-            Element serverName = doc.createElement("srvName");
+            Element serverName = doc.createElement("srvName");      //server nome
             serverName.appendChild(doc.createTextNode(srvName));
-            server.appendChild(serverName);
+           
 
-            Element serverIP = doc.createElement("srvIP");
+            Element serverIP = doc.createElement("srvIP");      //server ip
             serverIP.appendChild(doc.createTextNode(srvIP));
-            server.appendChild(serverIP);
+           
 
-            Element serverPort = doc.createElement("port");
+            Element serverPort = doc.createElement("port");     //servre porta
             serverPort.appendChild(doc.createTextNode(port));
-            server.appendChild(serverPort);
+            
 
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File("servers.xml"));
 
             transformer.transform(source, result);
             return "fine";
 
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
-            return pce.getMessage();
-        } catch (TransformerException tfe) {
-            tfe.printStackTrace();
-            return tfe.getMessage();
-        } catch (SAXException ex) {
-            ex.printStackTrace();
-            return ex.getMessage();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return ex.getMessage();
+
         }
     }
 
