@@ -12,8 +12,8 @@ import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-public class ServerConnection {
-
+public class ServerConnection {             //Questa è una classe che rappresenta una connessione a un server utilizzando un socket
+    
     private PrintWriter out = null;
     private Socket clientSocket = null;
 
@@ -25,8 +25,8 @@ public class ServerConnection {
 
     }
 
-    public String connect(String host, String portStr) {
-        try {
+    public String connect(String host, String portStr) {        //metodo accetta un nome host e un numero di porta come argomenti e tenta di stabilire una connessione socket all'host e alla porta specificati. Se la connessione ha esito positivo, crea un PrintWriteroggetto utilizzando il flusso di output del socket e lo memorizza nel outcampo. Se la connessione non va a buon fine, restituisce una stringa che descrive l'errore
+        try {                                                   // l'analisi del numero di porta ha esito positivo, crea un nuovo Socketoggetto e tenta di connettersi all'host e alla porta specificati utilizzando il connectmetodo della Socketclasse. Se la connessione ha esito positivo, crea un PrintWriteroggetto utilizzando il flusso di output del socket e lo memorizza nel outcampo. Se la connessione fallisce, rileva UnknownHostExceptionse l'host è sconosciuto o non disponibile o IOExceptionse non è in grado di ottenere l'I/O per la connessione. In entrambi i casi, imposta il clientSocketcampo su nulle restituisce un messaggio di errore.
             int port;
             try {
                 port = Integer.parseInt(portStr);
@@ -46,7 +46,7 @@ public class ServerConnection {
         }
     }
 
-    public void readFromServer(Label word, Label info, Label remainingAttempts, Label score, Label gameStatus, ImageView hang, ImageView hangItems) throws IOException {
+    public void readFromServer(Label word, Label info, Label remainingAttempts, Label score, Label gameStatus, ImageView hang, ImageView hangItems) throws IOException {        //prende dal server gli attributi nelle parentesi
         String line;
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         while ((line = in.readLine()) != null) {
@@ -89,7 +89,7 @@ public class ServerConnection {
                     }
                 }
 
-                private void setImages(ImageView hang, ImageView hangItems, int remainingAttempts) {
+                private void setImages(ImageView hang, ImageView hangItems, int remainingAttempts) {        //setta le immagini del impiccato
                     switch (remainingAttempts) {
                         case 6:
                             hang.setImage(new Image(getClass().getResourceAsStream("/hangs/hang1.png")));
