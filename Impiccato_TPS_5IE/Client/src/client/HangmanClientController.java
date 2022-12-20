@@ -183,7 +183,7 @@ public class HangmanClientController implements Initializable, IScreensControlle
     }
 
     private void loadServers() {            //mettere upload server
-        File f = new File("servers.xml");
+        File f = new File("servers.xml");       //crea file xml
         if (f.exists() && !f.isDirectory()) {
             try {
                 srvTree.setShowRoot(true);
@@ -194,7 +194,7 @@ public class HangmanClientController implements Initializable, IScreensControlle
                 Document doc = docBuilder.parse("servers.xml");
                 NodeList serversList = doc.getElementsByTagName("server");
 
-                for (int i = 0; i < serversList.getLength(); i++) {
+                for (int i = 0; i < serversList.getLength(); i++) {             // legge i dati dei server da un documento XML e crea oggetti Server per ogni elemento server presente nel documento. Gli oggetti Server vengono quindi aggiunti a una vista ad albero per essere visualizzati all'utente.
                     Element srvEl = (Element) serversList.item(i);
                     Server server = new Server(srvEl.getElementsByTagName("srvName").item(0).getTextContent(), srvEl.getElementsByTagName("srvIP").item(0).getTextContent(), srvEl.getElementsByTagName("port").item(0).getTextContent());
                     addToTreeView(server);
@@ -215,7 +215,7 @@ public class HangmanClientController implements Initializable, IScreensControlle
     }
 
 
-    private class ConnectService extends Service<String> {
+    private class ConnectService extends Service<String> {      //imposta un gestore per l'evento di completamento del lavoro del ConnectService, che visualizza un messaggio all'utente quando la connessione con il server è stata stabilita.
 
         private ConnectService() {
             setOnSucceeded((WorkerStateEvent event) -> {
