@@ -10,7 +10,7 @@ public class HangmanServerHandler implements Runnable {
     private ArrayList<String> words;
 
     private String currentWord;     //la parola in corso
-    private String attempedGuess;       //tentativi "indovinati"
+    private String attempedGuess;       //ha tentato di indovinare
 
     private short remainingAttempts;        //tentativi rimanenti
     private short score;            //punteggio
