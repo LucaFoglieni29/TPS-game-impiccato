@@ -17,7 +17,8 @@ public class ServerConnection {             //Questa è una classe che rappresen
     private PrintWriter out = null;
     private Socket clientSocket = null;
 
-    public Socket getClientSocket() {
+    public Socket getClientSocket() {       
+        //è un metodo che restituisce l'oggetto socket client in una classe che rappresenta una connessione client-server.
         return clientSocket;
     }
 
@@ -49,12 +50,10 @@ public class ServerConnection {             //Questa è una classe che rappresen
     public void readFromServer(Label word, Label info, Label remainingAttempts, Label score, Label gameStatus, ImageView hang, ImageView hangItems) throws IOException {        //prende dal server gli attributi nelle parentesi
         String line;
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        while ((line = in.readLine()) != null) {
-            if (line.equals("ok_fine")) {
-                break;
+   
             }
-            String[] msg = line.split(";");
-            Platform.runLater(new Runnable() {
+           
+            Platform.runLater(new Runnable() {      //è un metodo nel framework dell'applicazione JavaFX utilizzato per eseguire un'attività eseguibile sul thread dell'applicazione JavaFX. Questo metodo è utile per aggiornare l'interfaccia utente di un'applicazione JavaFX
                 @Override
                 public void run() {
                     word.setText(msg[1].contains("-") ? msg[1].replaceAll(".(?!$)", "$0 ") : msg[1]);
