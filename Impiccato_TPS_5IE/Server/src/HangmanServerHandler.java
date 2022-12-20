@@ -2,17 +2,18 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class HangmanServerHandler implements Runnable {
+public class HangmanServerHandler implements Runnable { 
+            //gestione del gioco con tentativi = 7,
     private final static short _TatalAttempts = 7;
 
     private Socket clientSocket;
     private ArrayList<String> words;
 
-    private String currentWord;
-    private String attempedGuess;
+    private String currentWord;     //la parola in corso
+    private String attempedGuess;       //tentativi "indovinati"
 
-    private short remainingAttempts;
-    private short score;
+    private short remainingAttempts;        //tentativi rimanenti
+    private short score;            //punteggio
 
     HangmanServerHandler(ArrayList<String> words, Socket clientSocket) {    //connessione della socket
         this.clientSocket = clientSocket;
@@ -21,9 +22,9 @@ public class HangmanServerHandler implements Runnable {
     }
 
   
-    public void run() {
+    public void run() {     //metodo viene eseguito in un thread separato per gestire la comunicazione con un client che si è connesso al server tramite un socket.
         BufferedReader br = null;
-        PrintWriter pw = null;
+        PrintWriter pw = null;      //etodo viene eseguito in un thread separato per gestire la comunicazione con un client che si è connesso al server tramite un socket.
 
         try {
             br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -32,7 +33,7 @@ public class HangmanServerHandler implements Runnable {
             String line;
             String msg;
 
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null) {            //Quindi entra in un ciclo infinito che legge una riga di input dal client utilizzando il readLinemetodo di BufferedReader. Se la riga non è null, il codice controlla se la riga è uguale alla stringa "nuovo_gioco" (che significa "nuovo gioco" in italiano). Se lo è, il server avvierà una nuova partita con il client. Se la linea è null, il loop terminerà, terminando la comunicazione con il client.
                 if (line.trim().equals("nuovo_gioco")) {
                     currentWord = getRandomWord();
                     remainingAttempts = _TatalAttempts;
@@ -47,7 +48,7 @@ public class HangmanServerHandler implements Runnable {
                     pw.flush();
                 } else if (line.trim().length() == 1) {
 
-                    String oldWordWithDashes = getWordWithDashes();
+                    String oldWordWithDashes = getWordWithDashes();     //Il metodo funziona chiamando se stesso in modo ricorsivo, sostituendo ogni volta il carattere nell'indice corrente con un trattino e incrementando l'indice di 1. La ricorsione continua finché l'indice charIndexnon è maggiore o uguale alla lunghezza della parola (stringa), a quel punto il metodo restituisce la modifica della parola come stringa
                     attempedGuess += line;
                     String newWordWithDashes = getWordWithDashes();
 
@@ -65,7 +66,7 @@ public class HangmanServerHandler implements Runnable {
                         } else {
                             msg = String.format("sbagliato;%s;%s;%s", newWordWithDashes, remainingAttempts, score);
                             pw.println(msg);
-                            pw.flush();
+                            pw.flush();     //metodo viene quindi chiamato PrintWriterper garantire che tutti i dati memorizzati nel buffer vengano scritti nella destinazione.
                         }
                     } else {
                         msg = String.format("corretto;%s;%s;%s", newWordWithDashes, remainingAttempts, score);
@@ -88,22 +89,14 @@ public class HangmanServerHandler implements Runnable {
             ex.printStackTrace();
         }
 
-        try {
-            br.close();
-            pw.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    private String getRandomWord() {
+    private String getRandomWord() {       //metodo random per prendere la parola da indovinare
         int randIndex = (int) (Math.random() * words.size());
         String word = words.get(randIndex);
         System.out.println("=== Parola === " + word);
         return word;
     }
 
-    private String getWordWithDashes() {
+    private String getWordWithDashes() {            //   sto metodo sembra restituire una versione della parola,(stringa) con alcuni caratteri sostituiti da trattini ('-'). Se la attempedGuesss tringa non è vuota, il metodo utilizza un'espressione regolare per sostituire i caratteri della parola inclusi lettere della parola trattini.
         if (attempedGuess.length() > 0) {
             return currentWord.replaceAll("[^" + attempedGuess + "]", "-");
         } else {
@@ -111,7 +104,7 @@ public class HangmanServerHandler implements Runnable {
         }
     }
 
-    private String getAllWordToDashes(StringBuilder word, int charIndex) {
+    private String getAllWordToDashes(StringBuilder word, int charIndex) {      //l metodo funziona chiamando se stesso in modo ricorsivo, sostituendo ogni volta il carattere nell'indice corrente con un trattino e incrementando l'indice di 1. La ricorsione continua finché l'indice charIndexnon è maggiore o uguale alla lunghezza della parola tringa, a quel punto il metodo restituisce la modifica della parola come stringa.
         if (charIndex >= word.length()) {
             return word.toString();
         } else {
