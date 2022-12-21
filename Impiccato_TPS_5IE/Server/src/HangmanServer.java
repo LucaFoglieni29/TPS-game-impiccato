@@ -55,7 +55,7 @@ public class HangmanServer {        //classe, che contiene un metodo principale 
             }
 
             bReader.close();
-        } catch (FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {        //che è la superclasse di tutte le classi che rappresentano eccezioni in Java. Stampa la traccia dello stack dell'eccezione, che è un elenco di chiamate al metodo che sono state effettuate fino al punto in cui è stata generata l'eccezione.
             ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
