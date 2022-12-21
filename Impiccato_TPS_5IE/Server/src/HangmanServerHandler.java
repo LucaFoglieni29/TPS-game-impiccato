@@ -24,7 +24,7 @@ public class HangmanServerHandler implements Runnable {
   
     public void run() {     //metodo viene eseguito in un thread separato per gestire la comunicazione con un client che si è connesso al server tramite un socket.
         BufferedReader br = null;
-        PrintWriter pw = null;      //etodo viene eseguito in un thread separato per gestire la comunicazione con un client che si è connesso al server tramite un socket.
+        PrintWriter pw = null;      //metodo viene eseguito in un thread separato per gestire la comunicazione con un client che si è connesso al server tramite un socket.
 
         try {
             br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -33,7 +33,7 @@ public class HangmanServerHandler implements Runnable {
             String line;
             String msg;
 
-            while ((line = br.readLine()) != null) {            //Quindi entra in un ciclo infinito che legge una riga di input dal client utilizzando il readLinemetodo di BufferedReader. Se la riga non è null, il codice controlla se la riga è uguale alla stringa "nuovo_gioco" (che significa "nuovo gioco" in italiano). Se lo è, il server avvierà una nuova partita con il client. Se la linea è null, il loop terminerà, terminando la comunicazione con il client.
+            while ((line = br.readLine()) != null) {            //Quindi entra in un ciclo infinito che legge una riga di input dal client utilizzando il readLinemetodo di BufferedReader. Se la riga non è null, il codice controlla se la riga è uguale alla stringa "nuovo_gioco". Se lo è, il server avvierà una nuova partita con il client. Se la linea è null, il loop terminerà, terminando la comunicazione con il client.
                 if (line.trim().equals("nuovo_gioco")) {
                     currentWord = getRandomWord();
                     remainingAttempts = _TatalAttempts;
