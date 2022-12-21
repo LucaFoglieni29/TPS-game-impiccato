@@ -125,7 +125,7 @@ public class ServerConnection {             //Questa è una classe che rappresen
         clientSocket.close();
     }
 
-    public void writeToServer(String msg) {
+        public void writeToServer(String msg) {         //Il metodo prende una stringa chiamata messaggio come argomento. Converte il messaggio in minuscolo utilizzando il toLowerCase metodo e quindi lo invia al server utilizzando il printl nmetodo outdell'oggetto, che è probabilmente un PrintWriter oggetto utilizzato per scrivere sul socket. Il flus hmetodo viene quindi chiamato per garantire che il messaggio venga inviato immediatamente
         out.println(msg.toLowerCase());
         out.flush();
     }
