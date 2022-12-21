@@ -19,7 +19,7 @@ public class HangmanServer {        //classe, che contiene un metodo principale 
     private static void listen(String[] args) {         //oggetto e ascolta le connessioni client in entrata sulla porta specificata. Quando viene stabilita una connessione, crea un nuovo HangmanServerHandleroggetto e gli passa l'elenco 
         try {                                           //di parole e il socket del client, e lo invia a ExecutorServiceun'esecuzione in concomitanza con altre richieste del client. La HangmanServerHandlerclasse è responsabile della gestione della comunicazione con il cliente e del gioco dell'impiccato.
             serverSocket = new ServerSocket(setPort(args));
-            System.out.printf("Discussioni disponibili: [%s]%n", availableThreads);
+            System.out.printf("attesa : [%s]%n", availableThreads);
             System.out.printf("In attesa di connessioni dalla porta [%s]...%n%n", serverSocket.getLocalPort());
             while (listening) {     //variabile è un flag che controlla il ciclo che ascolta le connessioni client. Finché lo è true, il server continuerà ad accettare nuove connessioni. Se è impostato su false, il ciclo terminerà e il server smetterà di ascoltare nuove connessioni.
                 Socket clientSocket = serverSocket.accept();
