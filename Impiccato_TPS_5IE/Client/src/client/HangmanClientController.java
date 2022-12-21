@@ -114,7 +114,7 @@ public class HangmanClientController implements Initializable, IScreensControlle
                 return;
             }
             initializeGameVariables(true);
-            ConnectService cs = new ConnectService();
+            ConnectService cs = new ConnectService();           //il codice crea un nuovo ConnectServiceoggetto e chiama il suo start metodo. La ConnectService classe è responsabile della gestione di una connessione a un server
             cs.start();
             ongoingGame = true;
         } else {            //in caso di errore
@@ -170,11 +170,11 @@ public class HangmanClientController implements Initializable, IScreensControlle
                 ex.printStackTrace();
             }
         }
-        wholeWord.setText("");
+      
     }
 
    //
-    void addSrvAction(ActionEvent event) {      //aggiunta server 
+    void addSrvAction(ActionEvent event) {      //se in gioco aggiungi nuovo server ti ferma subito 
         if (ongoingGame) {
             showAlert(Alert.AlertType.WARNING, "Avviso di sistema", "Aggiungi nuovo server", "Non puoi aggiungere un nuovo server mentre giochi! Prima termina il gioco");
             return;
@@ -190,7 +190,7 @@ public class HangmanClientController implements Initializable, IScreensControlle
 
                 DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 
-                DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+                DocumentBuilder docBuilder = docFactory.newDocumentBuilder();       //Questo codice creerebbe un DocumentBuilder oggetto usando a DocumentBuilderFactory, quindi lo userebbe per analizzare un file XML e creare un Documento ggetto che rappresenta la struttura del documento XML.
                 Document doc = docBuilder.parse("servers.xml");
                 NodeList serversList = doc.getElementsByTagName("server");
 
@@ -209,7 +209,7 @@ public class HangmanClientController implements Initializable, IScreensControlle
 
   
 
-    private void unselectAllNodes() {
+    private void unselectAllNodes() {           // Il metodo prima imposta il modello di selezione della visualizzazione ad albero in modo che non selezioni nulla, quindi imposta il testo di un'etichetta in modo che dica "nessun server selezionato"
         srvTree.getSelectionModel().select(null);
         selecredSrv.setText("nessun server selezionato");
     }
@@ -217,13 +217,13 @@ public class HangmanClientController implements Initializable, IScreensControlle
 
     private class ConnectService extends Service<String> {      //imposta un gestore per l'evento di completamento del lavoro del ConnectService, che visualizza un messaggio all'utente quando la connessione con il server è stata stabilita.
 
-        private ConnectService() {
+        private ConnectService() {          
             setOnSucceeded((WorkerStateEvent event) -> {
                 String result = getValue();
-                if (result.equals("done")) {
+                if (result.equals("fine")) {
                     info.setText("Connessione stabilita con: " + srv.getSrvName() + " [" + srv.getSrvIP() + ":" + srv.getPort() + "]");
                     showAlert(Alert.AlertType.INFORMATION, "Informazioni di sistema", "Connessione stabilita", "Connessione a: " + srv.getSrvName() + " è stato stabilito con successo");
-                    srvConn.writeToServer("new_game");
+                    srvConn.writeToServer("nuovo_gioco");
                     ReceiveService rs = new ReceiveService();
                     rs.start();
                 } else {
