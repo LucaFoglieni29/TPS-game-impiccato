@@ -15,7 +15,7 @@ public class HangmanServerHandler implements Runnable {
     private short remainingAttempts;        //tentativi rimanenti
     private short score;            //punteggio
 
-    HangmanServerHandler(ArrayList<String> words, Socket clientSocket) {    //connessione della socket
+    HangmanServerHandler(ArrayList<String> words, Socket clientSocket) {    // La parola argomento è un elenco di parole che possono essere utilizzate nel gioco e l' clientSocket argomento rappresenta la connessione al client. Il punteggio variabile è  utilizzata per tenere traccia del punteggio del giocatore nel gioco
         this.clientSocket = clientSocket;
         this.words = words;
         this.score = 0;
